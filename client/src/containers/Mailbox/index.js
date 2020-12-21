@@ -1,4 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect,useCallback} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {
   IconButton,
   List,
@@ -7,33 +9,19 @@ import {
   ListItemText,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import * as actions from '../../store/actions/emails';
 
 import './mailbox.scss';
 
 const MailBox = props => {
-  const [emailsList, setEmailsList] = useState ([
-    {
-      sender: 'git@test.com',
-      reciever: 'dan@test.com',
-      message: 'hello!!!!',
-      subject: 'this is test number 1',
-      creation_date: 1603464807000,
-    },
-    {
-      sender: 'lola@test.com',
-      reciever: 'dan@test.com',
-      message: 'hello 222!!!!',
-      subject: 'this is test number 2',
-      creation_date: 1603464807000,
-    },
-    {
-      sender: 'luka@test.com',
-      reciever: 'lexie@test.com',
-      message: 'test!!!!!!!!!!',
-      subject: 'this is test number 3',
-      creation_date: 1603464807000,
-    },
-  ]);
+    const emailsList = useSelector(state => state.emails.emailsList);
+
+    const dispatch = useDispatch();
+    const onInitEmails = useCallback(() => dispatch(actions.getEmails()),[]);
+
+    useEffect(() => {
+      onInitEmails();
+    },[onInitEmails])
 
   return (
     <div className='mailbox'>

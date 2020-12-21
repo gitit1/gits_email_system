@@ -1,0 +1,88 @@
+html, body {
+    font-family: "Open Sans", sans-serif;
+    margin: 0 auto;
+}
+
+.wrapper {
+    height: 100vh;
+    text-align: center;
+    .site-header {
+        background-color:rgb(39, 39, 39);
+        color: #9a58b2;
+        height: 50px;
+        display: flex;
+        align-items: center; 
+        // border-bottom: 1px solid grey;
+        .logo{
+            align-self: right;
+            padding: 20px;
+            font-family: 'Indie Flower', cursive;
+            font-weight: 700;
+            font-size: 2.2em;
+        }
+    }
+    .site-body {
+        .wrapper-sub-menu {
+            background-color: rgba(240, 240, 240, 0.705);
+            height: 60px;
+            display: flex;
+            align-items: center; 
+            border-bottom: 2px solid grey;
+            justify-content: space-between;
+            .sub-menu-icon__div,
+            .sub-menu-create-email-button__div{
+                padding: 10px;
+                * {
+                    color: #9a58b2;
+                }
+            }
+            // .sub-menu-create-email-button__div button{
+            //     // background-color:rgb(168, 168, 168);
+            // }
+            .sub-menu-icon__div{
+                .sub-menu-icon{
+                    font-size: 1.3em;
+                }
+            }
+        }
+        .wrapper-left-drawer,
+        .wrapper-right-window{
+            height: calc(100vh - 112px);
+            width: calc(100%-2px);
+        }
+        .wrapper-left-drawer {
+            border-right: 2px solid grey;
+            background-color: rgba(240, 240, 240, 0.705);
+            .MuiListItemIcon-root{
+                margin-left: 2%;
+            }
+        }
+        
+        // .wrapper-left-drawer {
+        //     // background-color: blueviolet;
+        //     border-right: 2px solid grey;
+        //     background-color: rgba(240, 240, 240, 0.705);
+            
+        //     .mailbox-inbox__div{
+        //         width: 100%;
+        //         button{
+        //             padding: 20px;
+        //             width: 100%;
+        //             *{
+        //                 font-size: 1.1em;
+        //             }
+        //             span {
+        //                 margin: 0; 
+        //                 margin-right: 10px;
+        //                 justify-content: flex-start; 
+        //                 color: #9a58b2;
+        //                 align-items: center;                 
+        //             }
+        //         }
+        //     }
+        // }
+        .wrapper-right-window {
+            width: 100%;
+        }
+    }
+}

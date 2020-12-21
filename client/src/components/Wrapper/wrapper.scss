@@ -1,0 +1,42 @@
+html, body {
+    font-family: "Open Sans", sans-serif;
+    margin: 0 auto;
+}
+
+.wrapper {
+    // flex-grow: 1;
+    background-color:darkgray;
+    height: 100vh;
+    text-align: center;
+    .site-header {
+        color: #9a58b2;
+        height: 50px;
+        display: flex;
+        // justify-content: center;
+        align-items: center; 
+        .logo{
+            align-self: right;
+            padding: 12px;
+            font-family: 'Indie Flower', cursive;
+            font-weight: 700;
+            font-size: 2.2em;
+        }
+    }
+    .site-body {
+        .wrapper_sub_menu {
+            height: 40px;
+            background-color: bisque;
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+        }
+        .wrapper_left_drawer {
+            background-color: blueviolet;
+            height: calc(100vh - 90px);
+        }
+        .wrapper_right_window {
+            background-color: brown;
+            height: calc(100vh - 90px);
+        }
+    }
+}

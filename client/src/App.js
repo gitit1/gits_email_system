@@ -1,9 +1,12 @@
-import Wrapper from './components/Wrapper/wrapper';
+import Wrapper from './components/Wrapper/Wrapper';
+import Mailbox from './containers/Mailbox';
+import ComposeEmail from './containers/ComposeEmail';
 
 function App() {
   return (
     <Wrapper>
-        Edit <code>src/App.js</code> and save to reload. 
+        <Mailbox />
+        {/* <ComposeEmail /> */}
     </Wrapper>
   );
 }

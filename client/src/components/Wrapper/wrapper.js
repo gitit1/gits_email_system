@@ -1,32 +1,25 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import Header from './components/header';
+import Header from './components/Header.js';
+import PageSubHeader from './components/PageSubHeader.js';
+import PageEmailsTree from './components/PageEmailsTree.js';
+import PageContent from './components/PageContent.js';
 
-import './wrapper.scss';
+import './Wrapper.scss';
 
-const wrapper = props => {
+const Wrapper = props => {
   return (
     <div className="wrapper">
-      <Grid item xs={12}>
-        <Header className="site-header" />
-      </Grid>
       <Grid className="site-body">
-        <Grid item xs={12}>
-            <section className="wrapper_sub_menu">wrapper_sub_menu</section>
-        </Grid>
+        <Header className="site-header" />
+        <PageSubHeader className="wrapper-sub-menu" />
         <Grid container>
-            <Grid item xs={3}>
-                <section className="wrapper_left_drawer" >wrapper_left_drawer</section>
-            </Grid>
-            <Grid item xs={9}>
-                <section className="wrapper_right_window">
-                    {props.children}
-                </section>
-            </Grid>
+            <PageEmailsTree item className="wrapper-left-drawer" />
+            <PageContent children={props.children}/>
         </Grid>
       </Grid>
     </div>
   );
 };
 
-export default wrapper;
+export default Wrapper;

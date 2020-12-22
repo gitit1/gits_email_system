@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -13,28 +13,38 @@ import * as actions from '../../store/actions/emails';
 
 import './mailbox.scss';
 
-const MailBox = () => {
+const EMAILS_LIST_FILTER_KEY_DEFAULT = 'reciever';
+
+const MailBox = props => {
+  const [filteredEmailsList, setFilteredEmailsList] = useState([])
   const userEmail = useSelector(state => state.users.userEmail);
   const emailsList = useSelector(state => state.emails.emailsList);
 
   const dispatch = useDispatch();
-  const onInitEmails = useCallback((userEmail) => dispatch(actions.getEmails(userEmail)), []);
+  const onInitEmails = useCallback((userEmail) => dispatch(actions.getEmails(userEmail)), [dispatch]);
 
   useEffect(
     () => {
-      console.log('userName:',userEmail)
       userEmail && onInitEmails(userEmail);
     },
     [onInitEmails, userEmail]
   );
 
+  useEffect(() => {
+    if(emailsList){
+      const filterKey = props.location.params ? props.location.params.filterKey : EMAILS_LIST_FILTER_KEY_DEFAULT;
+      setFilteredEmailsList(emailsList.filter(email => email[filterKey] === userEmail));
+    }
+  },[emailsList, props.location.params])
+
+
   return (
     <div className="mailbox">
-      <h1>Inbox</h1> {/* TODO: FIX WITH ROUTING TO BE DYNAMIC */}
+      <h1>{props.location.params ? props.location.params.label : 'Inbox'}</h1>
       {!userEmail
         ? <p>Please Enter Your Email</p>
-        : <List> {/* TODO: ACCORDING TO ROUTING - NEEDS TO FILTER THE CURRECT LIST */}
-          {emailsList.map(email => (
+        : <List>
+          {filteredEmailsList.map(email => (
             <ListItem
               key={`${email.reciever}_${email.subject}_${email.creation_date}`}
               role={undefined}

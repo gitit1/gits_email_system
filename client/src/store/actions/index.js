@@ -1,5 +1,5 @@
 export {
-    initEmails,
+    initEmailsList,
     getEmails,
     getEmailsSuccess
 } from './emails';

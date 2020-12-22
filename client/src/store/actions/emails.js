@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 export const GET_EMAILS = 'GET_EMAILS';
-export const INIT_EMAILS = 'INIT_EMAILS';
+export const INIT_EMAILS_LIST = 'INIT_EMAILS_LIST';
 
-export const initEmails = () => {
+export const initEmailsList = () => {
   return {
-    type: INIT_EMAILS
+    type: INIT_EMAILS_LIST
   }; 
 }
 

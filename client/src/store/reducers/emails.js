@@ -1,5 +1,5 @@
 import { updateObject } from '../utils';
-import {INIT_EMAILS} from '../actions/emails';
+import {INIT_EMAILS_LIST} from '../actions/emails';
 import {GET_EMAILS} from '../actions/emails';
 
 const initialState = {
@@ -8,7 +8,7 @@ const initialState = {
 
 const emailsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case INIT_EMAILS:
+    case INIT_EMAILS_LIST:
       return updateObject( state, {
         emailsList: []
     } );

@@ -1,4 +1,4 @@
-import React, {useEffect,useCallback} from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -13,38 +13,45 @@ import * as actions from '../../store/actions/emails';
 
 import './mailbox.scss';
 
-const MailBox = props => {
-    const emailsList = useSelector(state => state.emails.emailsList);
+const MailBox = () => {
+  const userEmail = useSelector(state => state.users.userEmail);
+  const emailsList = useSelector(state => state.emails.emailsList);
 
-    const dispatch = useDispatch();
-    const onInitEmails = useCallback(() => dispatch(actions.getEmails()),[]);
+  const dispatch = useDispatch();
+  const onInitEmails = useCallback((userEmail) => dispatch(actions.getEmails(userEmail)), []);
 
-    useEffect(() => {
-      onInitEmails();
-    },[onInitEmails])
+  useEffect(
+    () => {
+      console.log('userName:',userEmail)
+      userEmail && onInitEmails(userEmail);
+    },
+    [onInitEmails, userEmail]
+  );
 
   return (
-    <div className='mailbox'>
-      <h1>first we test Mailbox</h1>
-      <List>
-        {emailsList.map ((email) => (
+    <div className="mailbox">
+      <h1>Inbox</h1> {/* TODO: FIX WITH ROUTING TO BE DYNAMIC */}
+      {!userEmail
+        ? <p>Please Enter Your Email</p>
+        : <List> {/* TODO: ACCORDING TO ROUTING - NEEDS TO FILTER THE CURRECT LIST */}
+          {emailsList.map(email => (
             <ListItem
-            key={`${email.reciever}_${email.subject}_${email.creation_date}`}
-            role={undefined}
-            dense
-            button
-            onClick={() => {}}
+              key={`${email.reciever}_${email.subject}_${email.creation_date}`}
+              role={undefined}
+              dense
+              button
+              onClick={() => { }}
             >
-            <ListItemText primary={email.sender} />
-            <ListItemText primary={email.subject} />
-            <ListItemSecondaryAction>
+              <ListItemText primary={email.sender} />
+              <ListItemText primary={email.subject} />
+              <ListItemSecondaryAction>
                 <IconButton edge="end" aria-label="Delete">
-                <DeleteIcon />
+                  <DeleteIcon />
                 </IconButton>
-            </ListItemSecondaryAction>
+              </ListItemSecondaryAction>
             </ListItem>
-        ))}
-      </List>
+          ))}
+        </List>}
     </div>
   );
 };

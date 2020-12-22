@@ -35,13 +35,13 @@ const Header = props => {
   }
 
   return (
-    <Grid item xs={12} className={props.className}>
-      <div className="logo">Git's Email</div>
-      <div className="login">
+    <Grid item xs={12} className="wrapper-grid__header">
+      <div className="wrapper-grid__header--logo">Git's Email</div>
+      <div className="wrapper-grid__header--login">
         {!isLoginFlag &&
           <Input
             id="fake-login"
-            className="fake-login"
+            className="wrapper-grid__header--login__input"
             placeholder="Enter Your Email..."
             value={loginValue}
             onChange={e => setLoginValue(e.target.value)}
@@ -51,7 +51,7 @@ const Header = props => {
               </InputAdornment>
             }
           />}
-        <Button className="login__button" onClick={() => loginHandler()}>
+        <Button className="wrapper-grid__header--login__button" onClick={() => loginHandler()}>
           {isLoginFlag ? 'Logout' : 'Login'}
         </Button>
       </div>

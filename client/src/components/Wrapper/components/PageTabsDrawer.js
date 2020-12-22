@@ -4,8 +4,7 @@ import {Grid, List, ListItem, ListItemIcon, ListItemText} from '@material-ui/cor
 import InboxIcon from '@material-ui/icons/Inbox';
 import SendIcon from '@material-ui/icons/Send';
 
-
-const PageSubHeader = props => {
+const PageTabsDrawer = props => {
   const userEmail = useSelector(state => state.users.userEmail);
 
   const tabsList = [
@@ -22,9 +21,9 @@ const PageSubHeader = props => {
   ]
 
   return (
-    <Grid item xs={2} className={props.className}>
-      <h4>{userEmail && userEmail}</h4>
-      <List component="nav" aria-label="main mailbox folders">
+    <Grid item xs={2} className="wrapper-grid__main--drawer">
+      <h4 className="tabs-drawer__header">{userEmail && userEmail}</h4>
+      <List component="nav" >
         {
           tabsList.map(tab => (
             <ListItem button>
@@ -40,4 +39,4 @@ const PageSubHeader = props => {
   );
 };
 
-export default PageSubHeader;
+export default PageTabsDrawer;

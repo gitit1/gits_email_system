@@ -3,7 +3,7 @@ import './button.scss';
 
 const NewButton = props => {
     return (
-        <Button variant="outlined" className={`${props.className} button`}>
+        <Button {...props} variant="outlined" className={`${props.className} button`}>
               {props.text}
         </Button>
     );

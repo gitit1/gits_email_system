@@ -3,8 +3,21 @@ const router = express.Router();
 const data = require('../data.js');
 try {
   router.get('/users/:userEmail/emails', (req, res) => {
-    console.log('get emails of user: ', req.params.userEmail);
     const userData = data.allEmailsList.find(userData => userData.userEmail === req.params.userEmail);
+    res.send(userData.emailsList)
+  });
+
+  router.post('/users/:userEmail/emails', (req, res) => {
+    const newData = [];
+    data.allEmailsList.map(function (a) {
+      if ((a.userEmail == req.params.userEmail) || (a.userEmail == req.body.reciever)) {
+        a.emailsList = [...a.emailsList, {id: Number(req.body.creation_date), ...req.body}];
+      }
+      newData.push(a);
+    });
+    data.allEmailsList = newData;
+    
+    let userData = data.allEmailsList.find(userData => userData.userEmail === req.params.userEmail);    
     res.send(userData.emailsList)
   });
 
@@ -25,7 +38,6 @@ try {
   });
 
   router.get('/users/:userEmail', (req, res) => {
-    console.log('get user')
     const isUserExsist = data.allEmailsList.some(
       obj => obj.userEmail === req.params.userEmail
     );

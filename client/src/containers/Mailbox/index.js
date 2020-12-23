@@ -1,9 +1,9 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Divider } from '@material-ui/core';
+import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import * as actions from '../../store/actions/emails';
+import * as actions from '../../store/actions';
 import './mailbox.scss';
 
 const EMAILS_LIST_FILTER_KEY_DEFAULT = 'reciever';

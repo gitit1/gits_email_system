@@ -34,3 +34,12 @@ export const deleteEmail = (userEmail, emailID) => {
     });
   };
 };
+
+export const sendEmail = ( email ) => {
+  return dispatch => {
+    return axios.post(`http://localhost:3031/users/${email.sender}/emails/`, email )
+          .then( response => {
+              dispatch( getEmailsSuccess( response.data ) );
+          } )
+  };
+};

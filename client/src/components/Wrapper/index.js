@@ -6,7 +6,7 @@ import PageSubHeader from './components/PageSubHeader.js';
 import PageTabsDrawer from './components/PageTabsDrawer.js';
 import PageContent from './components/PageContent.js';
 
-import './Wrapper.scss';
+import './wrapper.scss';
 
 const Wrapper = props => {
   const [isTabsDrawerOpen, setIsTabsDrawerOpen] = useState(true)

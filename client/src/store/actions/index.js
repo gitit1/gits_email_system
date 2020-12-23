@@ -1,7 +1,9 @@
 export {
     initEmailsList,
     getEmails,
-    getEmailsSuccess
+    getEmailsSuccess,
+    sendEmail,
+    deleteEmail
 } from './emails';
 
 export {

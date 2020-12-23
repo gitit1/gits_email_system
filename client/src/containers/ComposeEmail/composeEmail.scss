@@ -1,0 +1,15 @@
+.compose-email-page{
+    &__box{
+        &--form{
+            &__message{
+                min-height: 300px;
+            }
+            &__send-btn{
+                margin-top: 3%!important;
+                &.MuiButtonBase-root.Mui-disabled{
+                    opacity: 0.4;
+                }
+            }
+        }
+    }
+}

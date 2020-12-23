@@ -34,8 +34,9 @@ const Header = props => {
   }
 
   const loginHandler = () => {
-    history.push("/emails/tabs/inbox");
-    onLogin(loginValue);
+    onLogin(loginValue).then(()=>{
+      history.push("/emails/tabs/inbox");
+    })
   }
   const logoutHandler = () => {
     setIsLoginFlag(!isLoginFlag);

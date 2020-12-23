@@ -1,0 +1,20 @@
+.show-email-page{
+    display: flex;
+    justify-content:center;
+    align-content: center;
+    margin-top: 10vh;
+    &__card{
+        width: 70%;
+        min-height: 60vh;
+        text-align: left;
+        &--subject{
+            text-align: center;
+        };
+        &--from, &--to{
+            margin: 5px 0 5px 30px;
+        };
+        &--msg{
+            margin: 60px 0 0 30px;
+        }
+    }
+}

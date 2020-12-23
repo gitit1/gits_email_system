@@ -6,7 +6,7 @@ export const LOGOUT_USER = 'LOGOUT_USER';
 
 export const login = (userEmail) => {
   return dispatch => {
-    axios.get(`http://localhost:3031/users/${userEmail}`).then (response => {
+    return axios.get(`http://localhost:3031/users/${userEmail}`).then (response => {
       dispatch (!response.data ? loginFail('User Not Found') : loginSuccess(userEmail));
     });
   };

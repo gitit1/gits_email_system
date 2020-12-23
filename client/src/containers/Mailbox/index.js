@@ -22,6 +22,7 @@ const MailBox = props => {
 
   const dispatch = useDispatch();
   const onInitEmails = useCallback((userEmail) => dispatch(actions.getEmails(userEmail)), [dispatch]);
+  const onDeleteEmail = useCallback((userEmail, emailID) => dispatch(actions.deleteEmail(userEmail, emailID)), [dispatch]);
 
   useEffect(
     () => {
@@ -31,11 +32,11 @@ const MailBox = props => {
   );
 
   useEffect(() => {
-    if(emailsList){
+    if (emailsList) {
       const filterKey = props.location.params ? props.location.params.filterKey : EMAILS_LIST_FILTER_KEY_DEFAULT;
       setFilteredEmailsList(emailsList.filter(email => email[filterKey] === userEmail));
     }
-  },[emailsList, props.location.params])
+  }, [emailsList, userEmail, props.location.params])
 
 
   return (
@@ -55,7 +56,7 @@ const MailBox = props => {
               <ListItemText primary={email.sender} />
               <ListItemText primary={email.subject} />
               <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="Delete">
+                <IconButton edge="end" aria-label="Delete" onClick={() => { onDeleteEmail(userEmail, email.id) }}>
                   <DeleteIcon />
                 </IconButton>
               </ListItemSecondaryAction>

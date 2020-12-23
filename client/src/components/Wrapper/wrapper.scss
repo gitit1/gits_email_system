@@ -78,6 +78,9 @@ body {
                 .MuiListItemIcon-root {
                     margin-left: 2%;
                 }
+                &__tab.current-tab{
+                    color: #9a58b2;
+                }
             }
             &--content section{
                 width: 100%;

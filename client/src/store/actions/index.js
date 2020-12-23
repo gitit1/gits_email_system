@@ -12,3 +12,7 @@ export {
     loginSuccess,
     loginFail
 } from './users';
+
+export{
+    getScreenSize
+}from './screen'

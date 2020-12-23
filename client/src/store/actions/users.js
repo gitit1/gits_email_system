@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../axios-server';
 
 export const LOGIN_USER_SECCESS = 'LOGIN_USER_SECCESS';
 export const LOGIN_USER_FAIL = 'LOGIN_USER_FAIL';
@@ -6,7 +6,7 @@ export const LOGOUT_USER = 'LOGOUT_USER';
 
 export const login = (userEmail) => {
   return dispatch => {
-    return axios.get(`http://localhost:3031/users/${userEmail}`).then (response => {
+    return axios.get(`/users/${userEmail}`).then (response => {
       dispatch (!response.data ? loginFail('User Not Found') : loginSuccess(userEmail));
     });
   };

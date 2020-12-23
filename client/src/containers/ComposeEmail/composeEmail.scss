@@ -1,3 +1,5 @@
+@import '../../style/_varibles';
+
 .compose-email-page{
     &__box{
         &--form{
@@ -8,6 +10,18 @@
                 margin-top: 3%!important;
                 &.MuiButtonBase-root.Mui-disabled{
                     opacity: 0.4;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: $smallScreen) {
+    .compose-email-page{
+        &__box{
+            &--form{
+                &__message{
+                    min-height: 200px;
                 }
             }
         }

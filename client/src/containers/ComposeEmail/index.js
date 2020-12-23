@@ -30,6 +30,7 @@ const ComposeEmail = () => {
   });
   const [formIsValid, setFormIsValid] = useState(false);
   const [isEmailSentSuccess, setIsEmailSentSuccess] = useState(false);
+  const smallScreen = useSelector(state => state.screen.smallSize);
   const history = useHistory();
   const dispatch = useDispatch();
   const onSendEmail = useCallback((email) => dispatch(actions.sendEmail(email)), [dispatch]);
@@ -111,7 +112,7 @@ const ComposeEmail = () => {
 
   return (
     <div className="compose-email-page">
-      <Box component="div" m={12} className="compose-email-page__box">
+      <Box component="div" m={smallScreen ? 2 : 12} className="compose-email-page__box">
         {
           isEmailSentSuccess ? <h1>Sent Email Successfully!</h1> :
 
@@ -144,7 +145,7 @@ const ComposeEmail = () => {
               <br /><br /><br />
               <FormControl fullWidth>
                 <TextareaAutosize
-                  rowsMax={4}
+                  rowsMax={smallScreen ? 3 : 4}
                   variant="outlined"
                   className="compose-email-page__box--form__message"
                   onChange={(e) => { inputHandler('message', e, 'msgLength', 'onChange') }}

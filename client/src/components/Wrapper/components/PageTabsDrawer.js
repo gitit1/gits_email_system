@@ -7,7 +7,8 @@ import SendIcon from '@material-ui/icons/Send';
 
 const PageTabsDrawer = props => {
   const userEmail = useSelector(state => state.users.userEmail);
-  const [currentTab, setCurrentTab] = useState('Inbox')
+  const smallScreen = useSelector(state => state.screen.smallSize);
+  const [currentTab, setCurrentTab] = useState(props.currentDrawerTab)
   const tabsList = [
     {
       name: 'Inbox',
@@ -24,7 +25,7 @@ const PageTabsDrawer = props => {
   ]
 
   return (
-    <Grid item xs={2} className="wrapper-grid__main--drawer">
+    <Grid item xs={props.tabsDrawerGridSize} className="wrapper-grid__main--drawer">
       <h4 className="wrapper-grid__main--drawer__header">{userEmail && userEmail}</h4>
       <List component="nav" >
         {
@@ -37,10 +38,15 @@ const PageTabsDrawer = props => {
               }
             }}
               className='unstyled-link' key={tab.name}>
-              <ListItem 
-              button 
-              className={currentTab===tab.name ? 'wrapper-grid__main--drawer__tab current-tab' : 'wrapper-grid__main--drawer__tab'}
-              onClick={() => setCurrentTab(tab.name)}>
+              <ListItem
+                button
+                className={currentTab === tab.name ? 'wrapper-grid__main--drawer__tab current-tab' : 'wrapper-grid__main--drawer__tab'}
+                onClick={() => {
+                  if (smallScreen) {
+                    props.toggleTabsDrawer(tab.name)
+                  }
+                  setCurrentTab(tab.name);
+                }}>
                 <ListItemIcon>
                   {tab.icon}
                 </ListItemIcon>

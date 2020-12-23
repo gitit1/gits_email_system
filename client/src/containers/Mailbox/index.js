@@ -43,7 +43,7 @@ const MailBox = props => {
             <ListItemText primary="From" />
             <ListItemText primary="Subject" />
             <ListItemSecondaryAction>
-              Delete Email
+              Delete
               </ListItemSecondaryAction>
           </ListItem>
         </div>

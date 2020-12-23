@@ -20,6 +20,7 @@ function App() {
       <Route  path='/emails/new' exact render={props => isAuth ? <ComposeEmail {...props} /> : <Redirect to="/" />} />
       <Route  path='/emails/tabs/:id' exact render={props => isAuth ? <Mailbox {...props} /> : <Redirect to="/" />} />
       <Route  path='/emails/show/:id' exact render={props => isAuth ? <ShowEmail {...props} /> : <Redirect to="/" />} />
+      <Redirect to="/" />
     </Wrapper>
   );
 }

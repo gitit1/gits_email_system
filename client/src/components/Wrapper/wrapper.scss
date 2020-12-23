@@ -1,3 +1,5 @@
+@import '../../style/_varibles';
+
 html,
 body {
     font-family: "Open Sans", sans-serif;
@@ -10,13 +12,12 @@ body {
     .wrapper-grid {
         &__header {
             background-color: rgb(39, 39, 39);
-            color: #9a58b2;
+            color: $headerColor;
             height: 60px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             &--logo {
-                align-self: right;
                 padding: 20px;
                 font-family: "Indie Flower", cursive;
                 font-weight: 700;
@@ -58,7 +59,7 @@ body {
                 &__icon{
                     .menu-icon{
                         font-size: 1.3em;
-                        color: #9a58b2;
+                        color: $headerColor;
                     }
                 }
             }
@@ -77,12 +78,32 @@ body {
                     margin-left: 2%;
                 }
                 &__tab.current-tab{
-                    color: #9a58b2;
+                    color: $headerColor;
                 }
             }
             &--content section{
                 width: 100%;
             }
+        }
+    }
+}
+
+
+@media only screen and (max-width: $smallScreen) {
+    .wrapper {
+        .wrapper-grid {
+            &__header {
+                &--logo {
+                    padding: 10px;
+                    font-size: 1.2em;
+                }
+                &--login {
+                    display: flex;
+                    &__input {
+                        width: 200px;
+                    }
+                }           
+            }        
         }
     }
 }

@@ -1,3 +1,5 @@
+@import '../../style/_varibles';
+
 .show-email-page{
     display: flex;
     justify-content:center;
@@ -9,6 +11,7 @@
         text-align: left;
         &--subject{
             text-align: center;
+            margin-bottom: 40px!important;
         };
         &--from, &--to{
             margin: 5px 0 5px 30px;
@@ -16,5 +19,15 @@
         &--msg{
             margin: 60px 0 0 30px;
         }
+    }
+}
+
+@media only screen and (max-width: $smallScreen) {
+    .show-email-page{
+        margin-top: 6vh;
+        &__card{
+            width: 90%;
+            min-height: 70vh;
+        }        
     }
 }

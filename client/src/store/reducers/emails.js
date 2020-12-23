@@ -1,18 +1,20 @@
+import { updateObject } from '../utils';
+import {INIT_EMAILS_LIST} from '../actions/emails';
 import {GET_EMAILS} from '../actions/emails';
 
-const updateObject = (oldObject, updatedProperties) => {
-  return {
-      ...oldObject,
-      ...updatedProperties
-  };
-};
+const initialState = {
+  emailsList: []
+}
 
-const emailsReducer = (state = {emailsList: []}, action) => {
+const emailsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_EMAILS:
-      console.log('in reducer')
+    case INIT_EMAILS_LIST:
       return updateObject( state, {
-        emailsList: action.emails
+        emailsList: []
+    } );
+    case GET_EMAILS:
+      return updateObject( state, {
+        emailsList: action.emailsList
     } );
     default:
       return state;

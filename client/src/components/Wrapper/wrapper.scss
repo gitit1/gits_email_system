@@ -49,9 +49,6 @@ body {
                 &__icon,
                 &__button {
                     padding: 10px;
-                    * {
-                        color: #9a58b2;
-                    }
                 }
                 button {
                     &__div {
@@ -61,6 +58,7 @@ body {
                 &__icon{
                     .menu-icon{
                         font-size: 1.3em;
+                        color: #9a58b2;
                     }
                 }
             }

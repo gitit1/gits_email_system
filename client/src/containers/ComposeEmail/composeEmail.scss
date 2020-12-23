@@ -1,0 +1,12 @@
+.compose-email-page{
+    &__box{
+        &--form{
+            &__msgBox{
+                min-height: 300px;
+            }
+            &__send-btn{
+                margin-top: 3%!important;
+            }
+        }
+    }
+}

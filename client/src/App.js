@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 
-import Wrapper from './components/Wrapper/Wrapper';
+import Wrapper from './components/Wrapper';
 import Mailbox from './containers/Mailbox';
 import IndexPage from './containers/IndexPage';
 import ComposeEmail from './containers/ComposeEmail';

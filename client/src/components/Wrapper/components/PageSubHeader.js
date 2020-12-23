@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
 // import Search from '../../Material-UI/Search';
-import { Button, IconButton, Grid } from '@material-ui/core';
+import { IconButton, Grid } from '@material-ui/core';
+import Button from '../../Material-UI/Button'
 
 const PageSubHeader = props => {
 
@@ -16,9 +17,7 @@ const PageSubHeader = props => {
         </div>
         <div className="wrapper-grid__nav--left-side__button">
           <Link to="/emails/new" className='unstyled-link'>
-            <Button variant="outlined" className="sub-menu-create-email-button">
-              New Email
-          </Button>
+            <Button variant="outlined" text="New Email"/>
           </Link>
         </div>
       </div>

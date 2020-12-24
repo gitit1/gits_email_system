@@ -34,8 +34,7 @@ const PageTabsDrawer = props => {
   ])
 
   useEffect(() => {
-    const tabExist = tabsList.filter(tab => { return location.pathname.includes(tab.path) })[0]
-
+    const tabExist = tabsList.filter(tab => { return location.pathname.includes(tab.path) })[0];
     if (tabExist) {
       onInitTab(tabExist.name, tabExist.path, tabExist.filterKey);
       setCurrentTab(tabExist.name);

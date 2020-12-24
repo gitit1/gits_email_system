@@ -7,7 +7,7 @@ const PageContent = props => {
   return (
     <Grid item xs={props.contentGridSize} className="wrapper-grid__main--content" >
       <section>
-        {!error ? props.children : <p>{error}</p>}
+        {!error ? props.children : <h2>{error}</h2>}
       </section>
     </Grid>
   );

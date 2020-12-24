@@ -4,7 +4,8 @@ export {
     getEmailsSuccess,
     sendEmail,
     deleteEmail,
-    getCurrentTab
+    getCurrentTab,
+    getResultsList
 } from './emails';
 
 export {

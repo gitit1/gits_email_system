@@ -81,6 +81,8 @@ const ComposeEmail = () => {
     }
     if(!valid){
       setValigMsg(`${composeEmailForm[inputId].name} is Invalid - ${composeEmailForm[inputId].errorMsg}`)
+    }else{
+      setValigMsg('');
     }
     setComposeEmailForm({
       ...composeEmailForm,

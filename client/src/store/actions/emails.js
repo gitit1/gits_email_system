@@ -13,7 +13,6 @@ export const initEmailsList = () => {
 export const getEmails = (userEmail) => {
   return dispatch => {
     axios.get(`/users/${userEmail}/emails`).then(response => {
-      console.log(response.data);
       dispatch(getEmailsSuccess(response.data));
     });
   };
@@ -29,7 +28,6 @@ export const getEmailsSuccess = data => {
 export const deleteEmail = (userEmail, emailID) => {
   return dispatch => {
     axios.delete(`/users/${userEmail}/emails/${emailID}`).then(response => {
-      console.log(response.data);
       dispatch(getEmailsSuccess(response.data));
     });
   };

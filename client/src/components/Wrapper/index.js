@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Header from './components/Header.js';
 import PageSubHeader from './components/PageSubHeader.js';
@@ -14,6 +15,7 @@ const Wrapper = props => {
   const isAuth = useSelector(state => state.users.isAuth);
   const smallScreen = useSelector(state => state.screen.smallSize);
   const dispatch = useDispatch();
+  const history = useHistory();
   const onSaveScreenSize = useCallback((size) => dispatch(actions.getScreenSize(size)), [dispatch]);
 
   const [isTabsDrawerOpen, setIsTabsDrawerOpen] = useState(true)
@@ -21,35 +23,37 @@ const Wrapper = props => {
   let tabsDrawerGridSize = smallScreen ? 12 : 2;
   const contentGridSize = isAuth && isTabsDrawerOpen ? 10 : 12;
 
-  const getWindowSize = useCallback(() =>{
+  const getWindowSize = useCallback(() => {
     const isSmallSize = (window.innerWidth <= SMALL_SIZE_WIDTH) ? true : false;
     onSaveScreenSize(isSmallSize);
-    console.log('resize 1: ',isSmallSize)
-    console.log('window.innerWidth 1: ',window.innerWidth)
-  },[onSaveScreenSize]);
+  }, [onSaveScreenSize]);
 
-  useEffect(() => {//componentDidMount size check
+  useEffect(() => {
     getWindowSize();
-    if(smallScreen){
+    if (smallScreen) {
       setIsTabsDrawerOpen(false);
     }
-  },[getWindowSize,smallScreen])
+  }, [getWindowSize, smallScreen])
 
   useEffect(() => {
     const resizeListener = () => {
       getWindowSize();
     };
+
+    if (isAuth) {
+      history.push("/emails/tabs/inbox");
+    }
     window.addEventListener('resize', resizeListener);
 
     return () => {
       window.removeEventListener('resize', resizeListener);
     }
-  }, [onSaveScreenSize, getWindowSize])
+  }, [onSaveScreenSize, getWindowSize, isAuth, history])
 
 
 
   const toggleTabsDrawerHandler = (currentTab) => {
-    if(currentTab){
+    if (currentTab) {
       setCurrentDrawerTab(currentTab)
     }
     setIsTabsDrawerOpen(!isTabsDrawerOpen);

@@ -1,5 +1,7 @@
-import { updateObject } from '../utils';
-import { LOGIN_USER_SECCESS } from '../actions/users';
+import updateObject from '../utils/updateObject';
+import { GET_ERRORS } from '../actions/users';
+import { SET_CURRENT_USER } from '../actions/users';
+
 import { LOGIN_USER_FAIL } from '../actions/users';
 import { LOGOUT_USER } from '../actions/users';
 
@@ -11,12 +13,18 @@ const initialState = {
 
 const usersReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOGIN_USER_SECCESS:
+    case GET_ERRORS:
       return updateObject(state, {
+        error: action.error
+      });
+    case SET_CURRENT_USER:
+      return updateObject(state, {
+        isAuth: !!action.userEmail,
         userEmail: action.userEmail,
-        isAuth: true,
         error: null
       });
+
+
     case LOGIN_USER_FAIL:
       return updateObject(state, {
         error: action.error

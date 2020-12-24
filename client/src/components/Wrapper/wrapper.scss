@@ -67,8 +67,7 @@ body {
         &__main{
             &--drawer,
             &--content{
-                height: calc(100vh - 120px);
-                width: calc(100%-2px);
+                height: $heightWithoutHeader;
             }
 
             &--drawer{

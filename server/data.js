@@ -1,7 +1,7 @@
 module.exports.allEmailsList = [
     {
       userEmail: 'dan@test.com',
-      password: '12345',
+      password: '$2a$10$FmBODEOQ9gYruOtESLsdOeY/jRze0Jk/tvwFL2BslwbrseQeTiD6a',
       emailsList: [
         {
           id: 1603464807020,
@@ -47,7 +47,7 @@ module.exports.allEmailsList = [
     },
     {
       userEmail: 'lexie@test.com',
-      password: '4455aa',
+      password: '$2a$10$FmBODEOQ9gYruOtESLsdOeY/jRze0Jk/tvwFL2BslwbrseQeTiD6a',
       emailsList: [
         {
           id: 1603464817000,

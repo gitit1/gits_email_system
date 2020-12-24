@@ -1,21 +1,18 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Input, InputAdornment, Grid, Button } from '@material-ui/core';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import { Grid, Button } from '@material-ui/core';
 import * as actions from '../../../store/actions';
+import AuthPopup from  '../../Auth/auth';
 
-const Header = props => {
+const Header = () => {
+  const dispatch = useDispatch();
 
   const isAuth = useSelector(state => state.users.isAuth);
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const onLogin = useCallback(loginValue => dispatch(actions.login(loginValue)), [dispatch]);
-  const onLogout = useCallback(() => dispatch(actions.logout()), [dispatch]);
-  const onInitEmailsList = useCallback(() => dispatch(actions.initEmailsList()), [dispatch]);
 
+  const onLogOut = useCallback(() => dispatch(actions.logoutUser()), [dispatch]);
 
-  const [loginValue, setLoginValue] = useState('');
+  const [anchorLoginPopup, setAnchorLoginPopup] = React.useState(null);
   const [isLoginFlag, setIsLoginFlag] = useState(false);
 
   useEffect(
@@ -25,26 +22,20 @@ const Header = props => {
     [isAuth]
   );
   
-  const logToSiteHandler = () => {
-    if (isLoginFlag) {
-      logoutHandler();
-    } else {
-      loginHandler();
+  const loginHandler = (event) => {
+    if(isLoginFlag){
+      onLogOut();
+    }else{
+      openAuthPopup(event)
     }
+  };
+  
+  const openAuthPopup = (event) =>{
+    setAnchorLoginPopup(event.currentTarget);
   }
-
-  const loginHandler = () => {
-    onLogin(loginValue).then(()=>{
-      history.push("/emails/tabs/inbox");
-    })
-  }
-  const logoutHandler = () => {
-    setIsLoginFlag(!isLoginFlag);
-    setLoginValue('');
-    onLogout();
-    onInitEmailsList();
-    history.push("/");
-  }
+  const closeAuthPop = () => {
+    setAnchorLoginPopup(null);
+  };
 
   return (
     <Grid item xs={12} className="wrapper-grid__header">
@@ -52,23 +43,11 @@ const Header = props => {
         <Link to="/" className='unstyled-link'>Git's Email</Link>
       </div>
       <div className="wrapper-grid__header--login">
-        {!isLoginFlag &&
-          <Input
-            id="fake-login"
-            className="wrapper-grid__header--login__input"
-            placeholder="Enter Your Email..."
-            value={loginValue}
-            onChange={e => setLoginValue(e.target.value)}
-            startAdornment={
-              <InputAdornment position="start">
-                <AccountCircle />
-              </InputAdornment>
-            }
-          />}
-        <Button className="wrapper-grid__header--login__button" onClick={() => logToSiteHandler()}>
+        <Button className="wrapper-grid__header--login__button" onClick={loginHandler}>
           {isLoginFlag ? 'Logout' : 'Login'}
         </Button>
-      </div>
+        {!isAuth &&<AuthPopup anchor={anchorLoginPopup} close={closeAuthPop}/>}
+        </div>
     </Grid>
   );
 };

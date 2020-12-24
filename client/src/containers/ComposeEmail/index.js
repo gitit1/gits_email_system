@@ -1,10 +1,11 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Box, FormControl, Input, InputLabel, TextareaAutosize } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import Button from '../../components/Material-UI/Button'
+import Button from '../../components/UI/Button'
 import './composeEmail.scss';
 import * as actions from '../../store/actions';
+import {formValidation, fieldsValidation} from '../../components/Auth/utils';
 
 const ComposeEmail = () => {
   const userEmail = useSelector(state => state.users.userEmail);
@@ -51,64 +52,25 @@ const ComposeEmail = () => {
     });
   }
 
-  const checkFormValidation = () => {
-    console.log('in check validation', composeEmailForm)
-    let isValid = true;
-    for (var key in composeEmailForm) {
-      if (!composeEmailForm[key].valid) {
-        console.log('key is:', composeEmailForm[key], ' and he is: ', composeEmailForm[key].valid)
-        isValid = false;
-        break;
-      }
-    }
-    console.log('isValid: ', isValid)
-    setFormIsValid(isValid);
-  }
-  const inputHandler = (inputId, e, validationType, t) => {
-    let value = e.target.value;
-    console.log('in input handler:', inputId, e.target.value, validationType,)
-    console.log('e.key', e.key)
-    const emailPattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+  const checkFormValidation = useCallback(() => {
+    setFormIsValid(formValidation(composeEmailForm));
+  }, [composeEmailForm]);
 
-    switch (validationType) {
-      case 'email':
-        setComposeEmailForm({
-          ...composeEmailForm,
-          [inputId]: {
-            ...composeEmailForm[inputId],
-            valid: emailPattern.test(value),
-            touched: true,
-            value: value
-          }
-        })
-        break;
-      case 'msgLength':
-        console.log('in msgLength', value.length >= composeEmailForm[inputId].minLength)
-        console.log('e.target.value', e.target.value)
-        setComposeEmailForm({
-          ...composeEmailForm,
-          [inputId]: {
-            ...composeEmailForm[inputId],
-            valid: value.length >= composeEmailForm[inputId].minLength,
-            touched: true,
-            value: value
-          }
-        });
-        console.log('composeEmailForm:', composeEmailForm)
-        break;
-      default:
-        setComposeEmailForm({
-          ...composeEmailForm,
-          [inputId]: {
-            ...composeEmailForm[inputId],
-            touched: true,
-            value: value
-          }
-        })
-        break;
-    }
+  const inputHandler = (inputId, e, validationType, validationConditions) => {
+    setComposeEmailForm({
+      ...composeEmailForm,
+      [inputId]: {
+        ...composeEmailForm[inputId],
+        valid: fieldsValidation(e.target.value, validationType, validationConditions),
+        touched: true,
+        value: e.target.value
+      }
+    });
+  };
+
+  useEffect(() => {
     checkFormValidation();
-  }
+  }, [checkFormValidation, formIsValid]);
 
   return (
     <div className="compose-email-page">
@@ -129,9 +91,9 @@ const ComposeEmail = () => {
                 <InputLabel htmlFor="to">To</InputLabel>
                 <Input
                   id="to"
-                  required
                   error={composeEmailForm['to'].touched && !composeEmailForm['to'].valid}
-                  onKeyDown={(e) => inputHandler('to', e, 'email')}
+                  onChange={(e) => inputHandler('to', e, 'email')}
+                  value={composeEmailForm['to'].value}
                 />
               </FormControl>
               <br /><br />
@@ -139,7 +101,8 @@ const ComposeEmail = () => {
                 <InputLabel htmlFor="subject">Subject</InputLabel>
                 <Input
                   id="subject"
-                  onKeyDown={(e) => inputHandler('subject', e)}
+                  onChange={(e) => inputHandler('subject', e)}
+                  value={composeEmailForm['subject'].value}
                 />
               </FormControl>
               <br /><br /><br />
@@ -148,9 +111,8 @@ const ComposeEmail = () => {
                   rowsMax={smallScreen ? 3 : 4}
                   variant="outlined"
                   className="compose-email-page__box--form__message"
-                  onChange={(e) => { inputHandler('message', e, 'msgLength', 'onChange') }}
-                  // onKeyDown={(e) => { (e.key === 'Backspace') && inputHandler('message', e, 'msgLength', 'onKeyDown') }}
-                  onKeyDown={(e) => { console.log('keydown') }}
+                  onChange={(e) => { inputHandler('message', e, 'minLength', { minLength: composeEmailForm['message'].minLength }) }}
+                  value={composeEmailForm['message'].value}
                 />
               </FormControl>
               <Button

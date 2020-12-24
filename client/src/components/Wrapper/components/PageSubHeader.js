@@ -22,7 +22,7 @@ const PageSubHeader = props => {
         </div>
       </div>
       <div>
-        <Search placeholder='Search for Emails...' />
+        <Search placeholder='Search'/>
       </div>
     </Grid>
   );

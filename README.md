@@ -40,8 +40,8 @@
 
 
 - [] loader
-- [] add handle on show email if rendering the page without props
-- [] search in mail logic
+- [X] add handle on show email if rendering the page without props
+- [X] search in mail logic
 - [] add DB (firebase)
 - [] Add folders system
 - [] delete couple of emails toghethere (mark)

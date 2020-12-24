@@ -60,9 +60,14 @@ const Wrapper = props => {
 }, [isAuth, history]);
 
   const toggleTabsDrawerHandler = (tab) => {
+    console.log('toggleTabsDrawerHandler')
     if (tab) {
       setCurrentDrawerTab(tab)
     }
+    openDrewer();
+  }
+
+  const openDrewer = () =>{
     setIsTabsDrawerOpen(!isTabsDrawerOpen);
   }
 
@@ -71,13 +76,13 @@ const Wrapper = props => {
       <Grid className="wrapper-grid">
         <Header />
         {isAuth &&
-          <PageSubHeader toggleTabsDrawer={toggleTabsDrawerHandler} />
+          <PageSubHeader toggleTabsDrawer={openDrewer} />
         }
         <Grid container className="wrapper-grid__main">
           {isAuth && isTabsDrawerOpen &&
             <PageTabsDrawer
               tabsDrawerGridSize={tabsDrawerGridSize}
-              toggleTabsDrawer={toggleTabsDrawerHandler}
+              toogleOpenDrawer={toggleTabsDrawerHandler}
               currentDrawerTab={currentDrawerTab}
             />
           }

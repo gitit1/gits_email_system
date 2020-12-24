@@ -24,25 +24,31 @@ const ComposeEmail = () => {
       required: true
     },
     to: {
+      name: 'Reciever Email',
       value: '',
       valid: false,
       touched: false,
-      required: true
+      required: true,
+      errorMsg: 'Not a Valid Email Address'
     },
     subject: {
+      name: 'Subject',
       value: '',
       valid: true,
       required: false
     },
     message: {
+      name: 'Message',
       value: '',
       valid: false,
       required: true,
-      minLength: 5
+      minLength: 5,
+      errorMsg: 'Message Needs to Contain At Least 5 letters!'
     }
   });
   const [formIsValid, setFormIsValid] = useState(false);
   const [isEmailSentSuccess, setIsEmailSentSuccess] = useState(false);
+  const [validMsg, setValigMsg] = useState('');
 
   useEffect(()=>{
     onInitTab('','','')
@@ -72,6 +78,9 @@ const ComposeEmail = () => {
     let valid = composeEmailForm[inputId].valid;
     if (composeEmailForm[inputId].required) {
       valid = fieldsValidation(e.target.value, validationType, validationConditions);
+    }
+    if(!valid){
+      setValigMsg(`${composeEmailForm[inputId].name} is Invalid - ${composeEmailForm[inputId].errorMsg}`)
     }
     setComposeEmailForm({
       ...composeEmailForm,
@@ -138,6 +147,7 @@ const ComposeEmail = () => {
                 disabled={!formIsValid}
                 onClick={() => sendEmailHandler()}
               />
+              {validMsg && <p className="compose-email-page__box--form__errorMsg">{validMsg}</p>}
             </form>
         }
       </Box>

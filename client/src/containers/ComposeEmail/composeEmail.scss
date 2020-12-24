@@ -12,6 +12,9 @@
                     opacity: 0.4;
                 }
             }
+            &__errorMsg{
+                color: $errorColor;
+            }
         }
     }
 }

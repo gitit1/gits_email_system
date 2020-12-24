@@ -78,6 +78,11 @@ const Search = props => {
     const searchHandler = (e) => {
         const searchTerm = e.target.value;
 
+        if(searchTerm.length === 0){
+            onUpdateSearchResultsList([]);
+            return;
+        }
+
         const filteredList = emailsList.filter(email =>
                 email.reciever.includes(searchTerm) ||
                 email.sender.includes(e.target.value) ||

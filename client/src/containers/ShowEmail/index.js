@@ -28,7 +28,7 @@ const ShowEmail = props => {
                     >
                         To: {emailData.reciever}
                     </Typography>
-                    <br/><br/>
+                    <br /><br />
                     <Typography
                         variant="body2"
                         component="p"

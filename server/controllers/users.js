@@ -2,7 +2,7 @@
 let data = require('../data');
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
+const { getRandomColor } = require('../shared/randomColor');
 
 const getUserData = (userEmail) => {
     return data.allEmailsList.find(userData => userData.userEmail === userEmail);
@@ -13,17 +13,19 @@ exports.register = async (req, res) => {
     if (userData) {
         return res.status(400).json({ error: "Email already exists" });
     } else {
+        const avatar_color = await getRandomColor();
         const newUser = {
             userEmail: req.body.email,
             password: req.body.password,
-            emailsList: []
+            avatar_color: avatar_color,
+            emails_list: []
         };
         bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(newUser.password, salt, (err, hash) => {
                 if (err) throw err;
                 newUser.password = hash;
                 data.allEmailsList = [...data.allEmailsList, newUser];
-                res.json({userEmail: newUser.userEmail});
+                res.json({ userEmail: newUser.userEmail });
             });
         });
     }
@@ -31,9 +33,9 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
     const userData = getUserData(req.body.email);
-    
+
     if (!userData) {
-        return res.status(404).json({ error:  "Email not found"});
+        return res.status(404).json({ error: "Email not found" });
     }
 
     bcrypt.compare(req.body.password, userData.password).then(isMatch => {

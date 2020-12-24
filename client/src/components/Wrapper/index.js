@@ -12,14 +12,19 @@ import './wrapper.scss';
 const SMALL_SIZE_WIDTH = 760;
 
 const Wrapper = props => {
-  const isAuth = useSelector(state => state.users.isAuth);
-  const smallScreen = useSelector(state => state.screen.smallSize);
   const dispatch = useDispatch();
   const history = useHistory();
+
   const onSaveScreenSize = useCallback((size) => dispatch(actions.getScreenSize(size)), [dispatch]);
 
-  const [isTabsDrawerOpen, setIsTabsDrawerOpen] = useState(true)
-  const [currentDrawerTab, setCurrentDrawerTab] = useState('Inbox')
+  const isAuth = useSelector(state => state.users.isAuth);
+  const smallScreen = useSelector(state => state.screen.smallSize);
+  const currentTab = useSelector(state => state.emails.currentTab);
+  
+
+  const [isTabsDrawerOpen, setIsTabsDrawerOpen] = useState(true);
+  const [currentDrawerTab, setCurrentDrawerTab] = useState(currentTab.name);
+
   let tabsDrawerGridSize = smallScreen ? 12 : 2;
   const contentGridSize = isAuth && isTabsDrawerOpen ? 10 : 12;
 
@@ -40,9 +45,6 @@ const Wrapper = props => {
       getWindowSize();
     };
 
-    if (isAuth) {
-      history.push("/emails/tabs/inbox");
-    }
     window.addEventListener('resize', resizeListener);
 
     return () => {
@@ -52,9 +54,9 @@ const Wrapper = props => {
 
 
 
-  const toggleTabsDrawerHandler = (currentTab) => {
-    if (currentTab) {
-      setCurrentDrawerTab(currentTab)
+  const toggleTabsDrawerHandler = (tab) => {
+    if (tab) {
+      setCurrentDrawerTab(tab)
     }
     setIsTabsDrawerOpen(!isTabsDrawerOpen);
   }

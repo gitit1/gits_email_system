@@ -2,7 +2,8 @@ module.exports.allEmailsList = [
     {
       userEmail: 'dan@test.com',
       password: '$2a$10$FmBODEOQ9gYruOtESLsdOeY/jRze0Jk/tvwFL2BslwbrseQeTiD6a',
-      emailsList: [
+      avatar_color: '#e6d57e',
+      emails_list: [
         {
           id: 1603464807020,
           sender: 'git@test.com',
@@ -10,6 +11,7 @@ module.exports.allEmailsList = [
           message: 'hello!!!!',
           subject: 'this is test number 1',
           creation_date: 1603464807020,
+          avatar_color: '#13a130',
         },
         {
           id: 1603464807022,
@@ -18,6 +20,7 @@ module.exports.allEmailsList = [
           message: 'hello 222!!!!',
           subject: 'this is test number 2',
           creation_date: 1603464807022,
+          avatar_color: '#9fd15a',
         },
         {
           id: 1603464807100,
@@ -26,6 +29,7 @@ module.exports.allEmailsList = [
           message: 'test!!!!!!!!!!',
           subject: 'this is test number 3',
           creation_date: 1603464807100,
+          avatar_color: '#67308a',
         },
         {
           id: 1603464807200,
@@ -34,6 +38,7 @@ module.exports.allEmailsList = [
           message: 'test 333!!!!!!!!!!',
           subject: 'this is test number 4',
           creation_date: 1603464807200,
+          avatar_color: '#1d17ea',
         },
         {
           id: 1603464803300,
@@ -42,13 +47,15 @@ module.exports.allEmailsList = [
           message: 'test 444!!!!!!!!!!',
           subject: 'this is test number 5',
           creation_date: 1603464803300,
+          avatar_color: '#e6d57e',
         },
       ],
     },
     {
       userEmail: 'lexie@test.com',
       password: '$2a$10$FmBODEOQ9gYruOtESLsdOeY/jRze0Jk/tvwFL2BslwbrseQeTiD6a',
-      emailsList: [
+      avatar_color: '#1d17ea',
+      emails_list: [
         {
           id: 1603464817000,
           sender: 'lexie@test.com',
@@ -56,6 +63,7 @@ module.exports.allEmailsList = [
           message: 'test 333!!!!!!!!!!',
           subject: 'this is test number 4',
           creation_date: 1603464817000,
+          avatar_color: '#1d17ea'
         },
         {
           id: 1602464807000,
@@ -64,6 +72,7 @@ module.exports.allEmailsList = [
           message: 'test 444!!!!!!!!!!',
           subject: 'this is test number 5',
           creation_date: 1602464807000,
+          avatar_color: '#e6d57e',
         },
       ],
     },

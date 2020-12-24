@@ -1,50 +1,64 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from '@material-ui/core';
+import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText  } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import * as actions from '../../store/actions';
 import './mailbox.scss';
+import PrompDialog from '../../components/UI/Alert-Dialog/index'
+import Avatar from '../../components/UI/Avatar';
 
-const EMAILS_LIST_FILTER_KEY_DEFAULT = 'reciever';
-
-const MailBox = props => {
-  const [filteredEmailsList, setFilteredEmailsList] = useState([])
-  const userEmail = useSelector(state => state.users.userEmail);
-  const emailsList = useSelector(state => state.emails.emailsList);
+const MailBox = React.memo(props => {
   const history = useHistory();
   const dispatch = useDispatch();
+
   const onInitEmails = useCallback((userEmail) => dispatch(actions.getEmails(userEmail)), [dispatch]);
   const onDeleteEmail = useCallback((userEmail, emailID) => dispatch(actions.deleteEmail(userEmail, emailID)), [dispatch]);
 
+
+  const isAuth = useSelector(state => state.users.isAuth);
+  const userEmail = useSelector(state => state.users.userEmail);
+  const emailsList = useSelector(state => state.emails.emailsList);
+  const currentTab = useSelector(state => state.emails.currentTab);
+
+  const [filteredEmailsList, setFilteredEmailsList] = useState([]);
+  const [openPromp, setOpenPromp] = useState(false);
+  const [deleteEmailId, setDeleteEmailId] = useState(false);
+
   useEffect(
     () => {
-      userEmail && onInitEmails(userEmail);
+      userEmail && isAuth && onInitEmails(userEmail);
     },
-    [onInitEmails, userEmail]
+    [onInitEmails, userEmail, isAuth]
   );
 
   useEffect(() => {
     if (emailsList) {
-      const filterKey = props.location.params ? props.location.params.filterKey : EMAILS_LIST_FILTER_KEY_DEFAULT;
-      setFilteredEmailsList(emailsList.filter(email => email[filterKey] === userEmail));
+      setFilteredEmailsList(emailsList.filter(email => email[currentTab.filterKey] === userEmail));
     }
-  }, [emailsList, userEmail, props.location.params])
+  }, [emailsList])
 
+  const deleteEmailHandle = (id) => {
+    setDeleteEmailId(id)
+    setOpenPromp(true);
+  }
+
+  const prompDialogHandler = (toDelete) => {
+    setOpenPromp(false);
+    if (toDelete) {
+      onDeleteEmail(userEmail, deleteEmailId);
+    }
+  }
 
   return (
+
     <div className="mailbox">
-      <h1>{props.location.params ? props.location.params.label : 'Inbox'}</h1>
+      <h1>{currentTab.name}</h1>
       <List className="mailbox-list">
         <div className="mailbox-list__header">
-          <ListItem
-            key="list-header"
-          >
-            <ListItemText primary="From" />
+          <ListItem key="list-header" >
+            <ListItemText  primary={currentTab.filterKey === 'reciever' ? 'From' : `To`} />
             <ListItemText primary="Subject" />
-            <ListItemSecondaryAction>
-              Delete
-              </ListItemSecondaryAction>
           </ListItem>
         </div>
         {filteredEmailsList.map(email => (
@@ -54,18 +68,30 @@ const MailBox = props => {
             divider
             onClick={() => { history.push({ pathname: `/emails/show/${email.id}`, state: { emailData: email } }) }}
           >
-            <ListItemText primary={email.sender} />
-            <ListItemText primary={email.subject} />
+            <Avatar
+              name={email.sender}
+              color={email.avatar_color}
+            />
+            <ListItemText primary={currentTab.filterKey === 'reciever' ? email.sender : email.reciever} secondary={new Date(email.creation_date).toLocaleDateString()} />
+            <ListItemText primary={email.subject ? email.subject : '[No Subject]'} />
             <ListItemSecondaryAction>
-              <IconButton edge="end" aria-label="Delete" onClick={() => { onDeleteEmail(userEmail, email.id) }}>
+              <IconButton onClick={() => deleteEmailHandle(email.id)}>
                 <DeleteIcon />
               </IconButton>
             </ListItemSecondaryAction>
           </ListItem>
         ))}
       </List>
+      <PrompDialog
+        open={openPromp}
+        close={prompDialogHandler}
+        dialogTitle="Delete Email"
+        dialogMessage="Are you sure you want to delete the email?"
+        dialogAgreeLabel="Delete"
+        dialogDisagreeLabel="Cancel"
+      />
     </div>
   );
-};
+});
 
 export default MailBox;

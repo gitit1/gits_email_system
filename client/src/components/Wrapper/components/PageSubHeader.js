@@ -20,9 +20,6 @@ const PageSubHeader = props => {
           </Link>
         </div>
       </div>
-      {/* <div className='sub-menu-search'>
-          <Search placeholder='Search for Emails...'/>
-        </div> */}
     </Grid>
   );
 };

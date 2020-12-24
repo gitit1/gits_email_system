@@ -1,0 +1,9 @@
+.avatar {
+    margin-right: 1%;
+    text-transform: uppercase;
+    &.avatar.small {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+    }
+}

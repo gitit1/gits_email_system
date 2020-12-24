@@ -3,7 +3,8 @@ export {
     getEmails,
     getEmailsSuccess,
     sendEmail,
-    deleteEmail
+    deleteEmail,
+    getCurrentTab
 } from './emails';
 
 export {

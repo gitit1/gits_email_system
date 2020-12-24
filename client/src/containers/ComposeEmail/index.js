@@ -5,36 +5,48 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../components/UI/Button'
 import './composeEmail.scss';
 import * as actions from '../../store/actions';
-import {formValidation, fieldsValidation} from '../../components/Auth/utils';
+import { formValidation, fieldsValidation } from '../../components/Auth/utils';
 
 const ComposeEmail = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const onSendEmail = useCallback((email) => dispatch(actions.sendEmail(email)), [dispatch]);
+  const onInitTab = useCallback((name, path, filterKey) => dispatch(actions.getCurrentTab(name, path, filterKey)), [dispatch]);
+
   const userEmail = useSelector(state => state.users.userEmail);
+  const smallScreen = useSelector(state => state.screen.smallSize);
+  
   const [composeEmailForm, setComposeEmailForm] = useState({
     from: {
       value: userEmail,
-      valid: true
+      valid: true,
+      required: true
     },
     to: {
       value: '',
       valid: false,
-      touched: false
+      touched: false,
+      required: true
     },
     subject: {
       value: '',
-      valid: true
+      valid: true,
+      required: false
     },
     message: {
       value: '',
       valid: false,
+      required: true,
       minLength: 5
     }
   });
   const [formIsValid, setFormIsValid] = useState(false);
   const [isEmailSentSuccess, setIsEmailSentSuccess] = useState(false);
-  const smallScreen = useSelector(state => state.screen.smallSize);
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const onSendEmail = useCallback((email) => dispatch(actions.sendEmail(email)), [dispatch]);
+
+  useEffect(()=>{
+    onInitTab('','','')
+  },[]);
 
   const sendEmailHandler = () => {
     const email = {
@@ -47,7 +59,7 @@ const ComposeEmail = () => {
     onSendEmail(email).then(() => {
       setIsEmailSentSuccess(true);
       setTimeout(() => {
-        history.push("/emails/tabs/inbox");
+        history.push(`/emails/tabs/inbox`);
       }, 1000);
     });
   }
@@ -57,11 +69,15 @@ const ComposeEmail = () => {
   }, [composeEmailForm]);
 
   const inputHandler = (inputId, e, validationType, validationConditions) => {
+    let valid = composeEmailForm[inputId].valid;
+    if (composeEmailForm[inputId].required) {
+      valid = fieldsValidation(e.target.value, validationType, validationConditions);
+    }
     setComposeEmailForm({
       ...composeEmailForm,
       [inputId]: {
         ...composeEmailForm[inputId],
-        valid: fieldsValidation(e.target.value, validationType, validationConditions),
+        valid: valid,
         touched: true,
         value: e.target.value
       }
@@ -117,7 +133,7 @@ const ComposeEmail = () => {
               </FormControl>
               <Button
                 variant="outlined"
-                text="New Email"
+                text="Send Email"
                 className="compose-email-page__box--form__send-btn"
                 disabled={!formIsValid}
                 onClick={() => sendEmailHandler()}

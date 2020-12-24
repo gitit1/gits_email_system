@@ -3,12 +3,22 @@ import axios from '../axios-server';
 export const INIT_EMAILS_LIST = 'INIT_EMAILS_LIST';
 export const GET_EMAILS = 'GET_EMAILS';
 export const DELETE_EMAIL = 'DELETE_EMAIL';
+export const GET_CURRENT_TAB = 'GET_CURRENT_TAB';
 
 export const initEmailsList = () => {
   return {
     type: INIT_EMAILS_LIST
   };
 }
+
+export const getCurrentTab = (name, path, filterKey) => {
+  return {
+    type: GET_CURRENT_TAB,
+    name: name,
+    path: path,
+    filterKey: filterKey
+  };
+};
 
 export const getEmails = (userEmail) => {
   return dispatch => {
@@ -33,11 +43,11 @@ export const deleteEmail = (userEmail, emailID) => {
   };
 };
 
-export const sendEmail = ( email ) => {
+export const sendEmail = (email) => {
   return dispatch => {
-    return axios.post(`/users/${email.sender}/emails/`, email )
-          .then( response => {
-              dispatch( getEmailsSuccess( response.data ) );
-          } )
+    return axios.post(`/users/${email.sender}/emails/`, email)
+      .then(response => {
+        dispatch(getEmailsSuccess(response.data));
+      })
   };
 };

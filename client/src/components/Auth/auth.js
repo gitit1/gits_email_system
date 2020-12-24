@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
-import { FormControl, Input, InputLabel, Popover, Button } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-import MyButton from '../../components/UI/Button'
-import * as actions from '../../store/actions';
-import './auth.scss';
-import { formValidation, fieldsValidation } from './utils'
-const AuthPopup = props => {
-    const history = useHistory();
-    const dispatch = useDispatch();
+import { useDispatch } from 'react-redux';
 
-    const isAuth = useSelector(state => state.users.isAuth);
+import * as actions from '../../store/actions';
+
+import MyButton from '../../components/UI/Button'
+import { formValidation, fieldsValidation } from './utils';
+import { FormControl, Input, InputLabel, Popover, Button } from '@material-ui/core';
+
+import './auth.scss';
+
+const AuthPopup = props => {
+    const dispatch = useDispatch();
 
     const OnLogin = useCallback((user) => dispatch(actions.loginUser(user)), [dispatch]);
     const OnRegistrer = useCallback((email) => dispatch(actions.registerNewUser(email)), [dispatch]);
@@ -30,16 +30,8 @@ const AuthPopup = props => {
         }
     });
     const [formIsValid, setFormIsValid] = useState(false);
-    
-    let open = Boolean(props.anchor);
 
-    useEffect(() => {
-        if (isAuth) {
-            setTimeout(() => {
-                history.push("/emails/tabs/inbox");
-            }, 800);
-        }
-    },[isAuth, history]);
+    let open = Boolean(props.anchor);
 
     const checkFormValidation = useCallback(() => {
         setFormIsValid(formValidation(loginForm));
@@ -115,7 +107,7 @@ const AuthPopup = props => {
                     <br />
                     <div className='popup-auth__form--btns-div'>
                         <MyButton
-                        className="popup-auth__form--btns-div__login"
+                            className="popup-auth__form--btns-div__login"
                             variant="outlined"
                             text="Login"
                             onClick={() => onSubmit('login')}

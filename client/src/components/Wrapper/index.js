@@ -53,6 +53,11 @@ const Wrapper = props => {
   }, [onSaveScreenSize, getWindowSize, isAuth, history])
 
 
+  useEffect(() => {
+    if (isAuth) {
+        history.push(`/emails/tabs/inbox`);
+    }
+}, [isAuth, history]);
 
   const toggleTabsDrawerHandler = (tab) => {
     if (tab) {

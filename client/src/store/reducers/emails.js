@@ -1,10 +1,13 @@
 import updateObject from '../utils/updateObject';
+
 import {INIT_EMAILS_LIST} from '../actions/emails';
 import {GET_EMAILS} from '../actions/emails';
 import {GET_CURRENT_TAB} from '../actions/emails';
+import {GET_RESULTS_LIST} from '../actions/emails';
 
 const initialState = {
   emailsList: [],
+  searchList: [],
   currentTab: {
     name: '',
     path: '',
@@ -30,6 +33,11 @@ const emailsReducer = (state = initialState, action) => {
           filterKey: action.filterKey
         }
     } );
+    case GET_RESULTS_LIST: {
+      return updateObject( state, {
+        searchList: action.searchList
+    } );     
+    }
     default:
       return state;
   }

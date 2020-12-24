@@ -46,7 +46,7 @@ const ComposeEmail = () => {
 
   useEffect(()=>{
     onInitTab('','','')
-  },[]);
+  },[onInitTab]);
 
   const sendEmailHandler = () => {
     const email = {

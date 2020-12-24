@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
 import { IconButton, Grid } from '@material-ui/core';
 import Button from '../../UI/Button'
+import Search from '../../UI/Search'
 
 const PageSubHeader = props => {
 
@@ -16,9 +17,12 @@ const PageSubHeader = props => {
         </div>
         <div className="wrapper-grid__nav--left-side__button">
           <Link to="/emails/new" className='unstyled-link'>
-            <Button variant="outlined" text="New Email"/>
+            <Button variant="outlined" text="New Email" />
           </Link>
         </div>
+      </div>
+      <div>
+        <Search placeholder='Search for Emails...' />
       </div>
     </Grid>
   );

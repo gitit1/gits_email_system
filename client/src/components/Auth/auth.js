@@ -37,6 +37,7 @@ const AuthPopup = props => {
         setFormIsValid(formValidation(loginForm));
     }, [loginForm]);
 
+
     useEffect(() => {
         checkFormValidation();
     }, [checkFormValidation, formIsValid]);

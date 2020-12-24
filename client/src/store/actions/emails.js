@@ -4,6 +4,7 @@ export const INIT_EMAILS_LIST = 'INIT_EMAILS_LIST';
 export const GET_EMAILS = 'GET_EMAILS';
 export const DELETE_EMAIL = 'DELETE_EMAIL';
 export const GET_CURRENT_TAB = 'GET_CURRENT_TAB';
+export const GET_RESULTS_LIST = 'GET_RESULTS_LIST';
 
 export const initEmailsList = () => {
   return {
@@ -17,6 +18,14 @@ export const getCurrentTab = (name, path, filterKey) => {
     name: name,
     path: path,
     filterKey: filterKey
+  };
+};
+
+
+export const getResultsList = results => {
+  return {
+    type: GET_RESULTS_LIST,
+    searchList: results
   };
 };
 

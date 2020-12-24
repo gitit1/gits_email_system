@@ -2,9 +2,10 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Box, FormControl, Input, InputLabel, TextareaAutosize } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import Button from '../../components/Material-UI/Button'
+import Button from '../../components/UI/Button'
 import './composeEmail.scss';
 import * as actions from '../../store/actions';
+import {formValidation, fieldsValidation} from '../../components/Auth/utils';
 
 const ComposeEmail = () => {
   const userEmail = useSelector(state => state.users.userEmail);
@@ -52,41 +53,20 @@ const ComposeEmail = () => {
   }
 
   const checkFormValidation = useCallback(() => {
-    let isValid = true;
-    for (var key in composeEmailForm) {
-      if (!composeEmailForm[key].valid) {
-        isValid = false;
-        break;
-      }
-    }
-    setFormIsValid(isValid);
+    setFormIsValid(formValidation(composeEmailForm));
   }, [composeEmailForm]);
 
-  const inputHandler = (inputId, e, validationType, t) => {
-    const emailPattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-    let valid = composeEmailForm[inputId].valid;
-
-    switch (validationType) {
-      case 'email':
-        valid = emailPattern.test(e.target.value)
-        break;
-      case 'msgLength':
-        valid = e.target.value.length >= composeEmailForm[inputId].minLength
-        break;
-      default:
-        break;
-    }
+  const inputHandler = (inputId, e, validationType, validationConditions) => {
     setComposeEmailForm({
       ...composeEmailForm,
       [inputId]: {
         ...composeEmailForm[inputId],
-        valid: valid,
+        valid: fieldsValidation(e.target.value, validationType, validationConditions),
         touched: true,
         value: e.target.value
       }
     });
   };
-
 
   useEffect(() => {
     checkFormValidation();
@@ -111,10 +91,8 @@ const ComposeEmail = () => {
                 <InputLabel htmlFor="to">To</InputLabel>
                 <Input
                   id="to"
-                  required
                   error={composeEmailForm['to'].touched && !composeEmailForm['to'].valid}
                   onChange={(e) => inputHandler('to', e, 'email')}
-                  // onKeyPress={(e) => inputHandler('to', e, 'email')}
                   value={composeEmailForm['to'].value}
                 />
               </FormControl>
@@ -133,7 +111,7 @@ const ComposeEmail = () => {
                   rowsMax={smallScreen ? 3 : 4}
                   variant="outlined"
                   className="compose-email-page__box--form__message"
-                  onChange={(e) => { inputHandler('message', e, 'msgLength', 'onChange') }}
+                  onChange={(e) => { inputHandler('message', e, 'minLength', { minLength: composeEmailForm['message'].minLength }) }}
                   value={composeEmailForm['message'].value}
                 />
               </FormControl>

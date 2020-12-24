@@ -1,4 +1,4 @@
-import { updateObject } from '../utils';
+import updateObject from '../utils/updateObject';
 import {SCREEN_SIZE} from '../actions/screen';
 
 const initialState = {

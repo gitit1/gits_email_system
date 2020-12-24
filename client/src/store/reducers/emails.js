@@ -1,4 +1,4 @@
-import { updateObject } from '../utils';
+import updateObject from '../utils/updateObject';
 import {INIT_EMAILS_LIST} from '../actions/emails';
 import {GET_EMAILS} from '../actions/emails';
 

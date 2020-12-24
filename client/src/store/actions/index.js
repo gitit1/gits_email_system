@@ -7,10 +7,10 @@ export {
 } from './emails';
 
 export {
-    login,
-    logout,
-    loginSuccess,
-    loginFail
+    registerNewUser,
+    logoutUser,
+    setCurrentUser,
+    loginUser
 } from './users';
 
 export{

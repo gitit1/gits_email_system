@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from '@material-ui/core';
+import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText  } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import * as actions from '../../store/actions';
 import './mailbox.scss';
@@ -15,7 +15,7 @@ const MailBox = React.memo(props => {
   const onInitEmails = useCallback((userEmail) => dispatch(actions.getEmails(userEmail)), [dispatch]);
   const onDeleteEmail = useCallback((userEmail, emailID) => dispatch(actions.deleteEmail(userEmail, emailID)), [dispatch]);
 
-  
+
   const isAuth = useSelector(state => state.users.isAuth);
   const userEmail = useSelector(state => state.users.userEmail);
   const emailsList = useSelector(state => state.emails.emailsList);
@@ -56,10 +56,9 @@ const MailBox = React.memo(props => {
       <h1>{currentTab.name}</h1>
       <List className="mailbox-list">
         <div className="mailbox-list__header">
-          <ListItem key="list-header">
-            <ListItemText inset={true} primary={currentTab.filterKey === 'reciever' ? 'From' : `To`} />
-            <ListItemText  primary="Subject" />
-            <ListItemSecondaryAction>Delete</ListItemSecondaryAction>
+          <ListItem key="list-header" >
+            <ListItemText  primary={currentTab.filterKey === 'reciever' ? 'From' : `To`} />
+            <ListItemText primary="Subject" />
           </ListItem>
         </div>
         {filteredEmailsList.map(email => (
@@ -73,7 +72,7 @@ const MailBox = React.memo(props => {
               name={email.sender}
               color={email.avatar_color}
             />
-            <ListItemText primary={currentTab.filterKey === 'reciever' ? email.sender : email.reciever} />
+            <ListItemText primary={currentTab.filterKey === 'reciever' ? email.sender : email.reciever} secondary={new Date(email.creation_date).toLocaleDateString()} />
             <ListItemText primary={email.subject ? email.subject : '[No Subject]'} />
             <ListItemSecondaryAction>
               <IconButton onClick={() => deleteEmailHandle(email.id)}>

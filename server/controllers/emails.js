@@ -1,42 +1,44 @@
 
 let data = require('../data');
-let dataArray = data.allEmailsList;
 
 const getUserData = (userEmail) =>{
-  return dataArray.find(userData => userData.userEmail === userEmail);
+  return data.allEmailsList.find(userData => userData.userEmail === userEmail);
 }
 
 exports.get = (req, res) => {
-    const userData = getUserData(req.params.userEmail);
-    res.send(userData.emailsList)
+    res.send(getUserData(req.params.userEmail).emails_list)
 };
 
 exports.new = (req, res) => {
     const newData = [];
-    dataArray.map(function (a) {
+    data.allEmailsList.map(function (a) {
       if ((a.userEmail == req.params.userEmail) || (a.userEmail == req.body.reciever)) {
-        a.emailsList = [...a.emailsList, {id: Number(req.body.creation_date), ...req.body}];
+        a.emails_list = [...a.emails_list, {
+          id: Number(req.body.creation_date),
+          avatar_color: a.avatar_color,
+           ...req.body,
+          }];
       }
       newData.push(a);
     });
-    dataArray = newData;
+    data.allEmailsList = newData;
     
     const userData = getUserData(req.params.userEmail);  
-    res.send(userData.emailsList)
+    res.send(userData.emails_list)
 };
 
 exports.delete = (req, res) => {
     const newData = [];
     const userData = getUserData(req.params.userEmail);
-    const newUserEmailList = userData.emailsList.filter(i => i.id !== Number(req.params.emailId));
+    const newUserEmailList = userData.emails_list.filter(i => i.id !== Number(req.params.emailId));
 
-    dataArray.map(function (a) {
+    data.allEmailsList.map(function (a) {
       if (a.userEmail == req.params.userEmail) {
-        a.emailsList = newUserEmailList;
+        a.emails_list = newUserEmailList;
       }
       newData.push(a);
     });
-    dataArray = newData;
+    data.allEmailsList = newData;
 
     res.send(newUserEmailList);
 };

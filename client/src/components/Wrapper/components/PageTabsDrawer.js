@@ -1,18 +1,30 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation  } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Grid, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import InboxIcon from '@material-ui/icons/Inbox';
 import SendIcon from '@material-ui/icons/Send';
 
+const EMAILS_MAILBOX_DEFAULT = 'Inbox';
+
 const PageTabsDrawer = props => {
   const userEmail = useSelector(state => state.users.userEmail);
   const smallScreen = useSelector(state => state.screen.smallSize);
-  const [currentTab, setCurrentTab] = useState(props.currentDrawerTab)
+
+  const [currentTab, setCurrentTab] = useState(props.currentDrawerTab);
+
+  const location = useLocation()
+
+  useEffect(() =>{
+    if(location.pathname.includes(EMAILS_MAILBOX_DEFAULT.toLowerCase()) && currentTab !== EMAILS_MAILBOX_DEFAULT){
+      setCurrentTab(EMAILS_MAILBOX_DEFAULT)
+    }
+  },[currentTab, location]);
+  
   const tabsList = [
     {
-      name: 'Inbox',
-      path: 'inbox',
+      name: EMAILS_MAILBOX_DEFAULT,
+      path: EMAILS_MAILBOX_DEFAULT.toLowerCase(),
       icon: <InboxIcon />,
       filterKey: 'reciever',
     },

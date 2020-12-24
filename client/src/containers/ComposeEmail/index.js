@@ -5,27 +5,31 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../components/UI/Button'
 import './composeEmail.scss';
 import * as actions from '../../store/actions';
-import {formValidation, fieldsValidation} from '../../components/Auth/utils';
+import { formValidation, fieldsValidation } from '../../components/Auth/utils';
 
 const ComposeEmail = () => {
   const userEmail = useSelector(state => state.users.userEmail);
   const [composeEmailForm, setComposeEmailForm] = useState({
     from: {
       value: userEmail,
-      valid: true
+      valid: true,
+      required: true
     },
     to: {
       value: '',
       valid: false,
-      touched: false
+      touched: false,
+      required: true
     },
     subject: {
       value: '',
-      valid: true
+      valid: true,
+      required: false
     },
     message: {
       value: '',
       valid: false,
+      required: true,
       minLength: 5
     }
   });
@@ -57,11 +61,15 @@ const ComposeEmail = () => {
   }, [composeEmailForm]);
 
   const inputHandler = (inputId, e, validationType, validationConditions) => {
+    let valid = composeEmailForm[inputId].valid;
+    if (composeEmailForm[inputId].required) {
+      valid = fieldsValidation(e.target.value, validationType, validationConditions);
+    }
     setComposeEmailForm({
       ...composeEmailForm,
       [inputId]: {
         ...composeEmailForm[inputId],
-        valid: fieldsValidation(e.target.value, validationType, validationConditions),
+        valid: valid,
         touched: true,
         value: e.target.value
       }
@@ -117,7 +125,7 @@ const ComposeEmail = () => {
               </FormControl>
               <Button
                 variant="outlined"
-                text="New Email"
+                text="Send Email"
                 className="compose-email-page__box--form__send-btn"
                 disabled={!formIsValid}
                 onClick={() => sendEmailHandler()}

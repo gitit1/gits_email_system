@@ -24,6 +24,7 @@ const MailBox = React.memo(() => {
   const emailsList = useSelector(state => state.emails.emailsList);
   const searchList = useSelector(state => state.emails.searchList);
   const currentTab = useSelector(state => state.emails.currentTab);
+  const smallScreen = useSelector(state => state.screen.smallSize);
 
   const [filteredEmailsList, setFilteredEmailsList] = useState([]);
   const [searchMode, setSearchMode] = useState(false);
@@ -85,10 +86,10 @@ const MailBox = React.memo(() => {
                 divider
                 onClick={() => { history.push({ pathname: `/emails/show/${email.id}`, state: { emailData: email } }) }}
               >
-                <Avatar
+                {!smallScreen &&<Avatar
                   name={email.sender}
                   color={email.avatar_color}
-                />
+                />}
                 <ListItemText primary={currentTab.filterKey === 'reciever' ? email.sender : email.reciever} secondary={new Date(email.creation_date).toLocaleDateString()} />
                 <ListItemText primary={email.subject ? email.subject : '[No Subject]'} />
                 <ListItemSecondaryAction>

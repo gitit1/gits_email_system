@@ -62,8 +62,9 @@ const PageTabsDrawer = props => {
                 className={currentTab === tab.name ? 'wrapper-grid__main--drawer__tab current-tab' : 'wrapper-grid__main--drawer__tab'}
                 onClick={() => {
                   if (smallScreen) {
-                    props.toggleTabsDrawer(tab.name)
+                    props.toogleOpenDrawer()
                   }
+                  onInitTab(tab.name, tab.path, tab.filterKey);
                   setCurrentTab(tab.name);
                 }}>
                 <ListItemIcon>

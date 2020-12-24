@@ -1,0 +1,15 @@
+@import '../../../style/_varibles';
+
+.promp-dialog{
+    &__dialog{
+        &--title{
+            color: $headerColor;
+        }
+        &--agree-btn{
+            color: $primaryColor!important;
+        }
+        &--disagree-btn{
+            color: $errorColor!important;
+        }
+    }
+}

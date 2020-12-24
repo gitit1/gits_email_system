@@ -8,8 +8,6 @@ import './mailbox.scss';
 import PrompDialog from '../../components/UI/Alert-Dialog/index'
 import Avatar from '../../components/UI/Avatar';
 
-const EMAILS_LIST_FILTER_KEY_DEFAULT = 'reciever';
-
 const MailBox = React.memo(props => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -17,13 +15,15 @@ const MailBox = React.memo(props => {
   const onInitEmails = useCallback((userEmail) => dispatch(actions.getEmails(userEmail)), [dispatch]);
   const onDeleteEmail = useCallback((userEmail, emailID) => dispatch(actions.deleteEmail(userEmail, emailID)), [dispatch]);
 
-  const [filteredEmailsList, setFilteredEmailsList] = useState([]);
-  const [openPromp, setOpenPromp] = useState(false);
-  const [deleteEmailId, setDeleteEmailId] = useState(false);
-  const [filterKey, setFilterKey] = useState(EMAILS_LIST_FILTER_KEY_DEFAULT);
+  
   const isAuth = useSelector(state => state.users.isAuth);
   const userEmail = useSelector(state => state.users.userEmail);
   const emailsList = useSelector(state => state.emails.emailsList);
+  const currentTab = useSelector(state => state.emails.currentTab);
+
+  const [filteredEmailsList, setFilteredEmailsList] = useState([]);
+  const [openPromp, setOpenPromp] = useState(false);
+  const [deleteEmailId, setDeleteEmailId] = useState(false);
 
   useEffect(
     () => {
@@ -34,12 +34,9 @@ const MailBox = React.memo(props => {
 
   useEffect(() => {
     if (emailsList) {
-      if (props.location.params && props.location.params.filterKey) {
-        setFilterKey(props.location.params.filterKey)
-      }
-      setFilteredEmailsList(emailsList.filter(email => email[filterKey] === userEmail));
+      setFilteredEmailsList(emailsList.filter(email => email[currentTab.filterKey] === userEmail));
     }
-  }, [emailsList, userEmail, props.location.params, filterKey])
+  }, [emailsList])
 
   const deleteEmailHandle = (id) => {
     setDeleteEmailId(id)
@@ -56,12 +53,12 @@ const MailBox = React.memo(props => {
   return (
 
     <div className="mailbox">
-      <h1>{props.location.params ? props.location.params.label : 'Inbox'}</h1>
+      <h1>{currentTab.name}</h1>
       <List className="mailbox-list">
         <div className="mailbox-list__header">
           <ListItem key="list-header">
-            <ListItemText inset={true} primary={filterKey === 'reciever' ? 'From' : `To`} />
-            <ListItemText inset={true} primary="Subject" />
+            <ListItemText inset={true} primary={currentTab.filterKey === 'reciever' ? 'From' : `To`} />
+            <ListItemText  primary="Subject" />
             <ListItemSecondaryAction>Delete</ListItemSecondaryAction>
           </ListItem>
         </div>
@@ -76,7 +73,7 @@ const MailBox = React.memo(props => {
               name={email.sender}
               color={email.avatar_color}
             />
-            <ListItemText primary={filterKey === 'reciever' ? email.sender : email.reciever} />
+            <ListItemText primary={currentTab.filterKey === 'reciever' ? email.sender : email.reciever} />
             <ListItemText primary={email.subject ? email.subject : '[No Subject]'} />
             <ListItemSecondaryAction>
               <IconButton onClick={() => deleteEmailHandle(email.id)}>

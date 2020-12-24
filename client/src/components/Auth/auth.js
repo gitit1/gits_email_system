@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
-import { FormControl, Input, InputLabel, Popover, Button } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-import MyButton from '../../components/UI/Button'
-import * as actions from '../../store/actions';
-import './auth.scss';
-import { formValidation, fieldsValidation } from './utils';
-const AuthPopup = props => {
-    const history = useHistory();
-    const dispatch = useDispatch();
+import { useDispatch } from 'react-redux';
 
-    const isAuth = useSelector(state => state.users.isAuth);
+import * as actions from '../../store/actions';
+
+import MyButton from '../../components/UI/Button'
+import { formValidation, fieldsValidation } from './utils';
+import { FormControl, Input, InputLabel, Popover, Button } from '@material-ui/core';
+
+import './auth.scss';
+
+const AuthPopup = props => {
+    const dispatch = useDispatch();
 
     const OnLogin = useCallback((user) => dispatch(actions.loginUser(user)), [dispatch]);
     const OnRegistrer = useCallback((email) => dispatch(actions.registerNewUser(email)), [dispatch]);

@@ -1,30 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation  } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { Grid, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
+
+import * as actions from '../../../store/actions';
+
 import InboxIcon from '@material-ui/icons/Inbox';
 import SendIcon from '@material-ui/icons/Send';
-
-const EMAILS_MAILBOX_DEFAULT = 'Inbox';
+import { Grid, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 
 const PageTabsDrawer = props => {
+  const location = useLocation();
+  const dispatch = useDispatch();
+
+  const onInitTab = useCallback((name, path, filterKey) => dispatch(actions.getCurrentTab(name, path, filterKey)), [dispatch]);
+
   const userEmail = useSelector(state => state.users.userEmail);
   const smallScreen = useSelector(state => state.screen.smallSize);
 
   const [currentTab, setCurrentTab] = useState(props.currentDrawerTab);
-
-  const location = useLocation()
-
-  useEffect(() =>{
-    if(location.pathname.includes(EMAILS_MAILBOX_DEFAULT.toLowerCase()) && currentTab !== EMAILS_MAILBOX_DEFAULT){
-      setCurrentTab(EMAILS_MAILBOX_DEFAULT)
-    }
-  },[currentTab, location]);
-  
-  const tabsList = [
+  const [tabsList] = useState([
     {
-      name: EMAILS_MAILBOX_DEFAULT,
-      path: EMAILS_MAILBOX_DEFAULT.toLowerCase(),
+      name: 'Inbox',
+      path: 'inbox',
       icon: <InboxIcon />,
       filterKey: 'reciever',
     },
@@ -34,7 +31,18 @@ const PageTabsDrawer = props => {
       icon: <SendIcon />,
       filterKey: 'sender'
     }
-  ]
+  ])
+
+  useEffect(() => {
+    const tabExist = tabsList.filter(tab => { return location.pathname.includes(tab.path) })[0]
+
+    if (tabExist) {
+      onInitTab(tabExist.name, tabExist.path, tabExist.filterKey);
+      setCurrentTab(tabExist.name);
+    }else{
+      setCurrentTab(null)
+    }
+  }, [location, onInitTab, tabsList]);
 
   return (
     <Grid item xs={props.tabsDrawerGridSize} className="wrapper-grid__main--drawer">

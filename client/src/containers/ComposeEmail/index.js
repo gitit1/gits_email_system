@@ -8,7 +8,15 @@ import * as actions from '../../store/actions';
 import { formValidation, fieldsValidation } from '../../components/Auth/utils';
 
 const ComposeEmail = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const onSendEmail = useCallback((email) => dispatch(actions.sendEmail(email)), [dispatch]);
+  const onInitTab = useCallback((name, path, filterKey) => dispatch(actions.getCurrentTab(name, path, filterKey)), [dispatch]);
+
   const userEmail = useSelector(state => state.users.userEmail);
+  const smallScreen = useSelector(state => state.screen.smallSize);
+  
   const [composeEmailForm, setComposeEmailForm] = useState({
     from: {
       value: userEmail,
@@ -35,10 +43,10 @@ const ComposeEmail = () => {
   });
   const [formIsValid, setFormIsValid] = useState(false);
   const [isEmailSentSuccess, setIsEmailSentSuccess] = useState(false);
-  const smallScreen = useSelector(state => state.screen.smallSize);
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const onSendEmail = useCallback((email) => dispatch(actions.sendEmail(email)), [dispatch]);
+
+  useEffect(()=>{
+    onInitTab('','','')
+  },[]);
 
   const sendEmailHandler = () => {
     const email = {
@@ -51,7 +59,7 @@ const ComposeEmail = () => {
     onSendEmail(email).then(() => {
       setIsEmailSentSuccess(true);
       setTimeout(() => {
-        history.push("/emails/tabs/inbox");
+        history.push(`/emails/tabs/inbox`);
       }, 1000);
     });
   }

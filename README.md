@@ -1,5 +1,5 @@
 # gitit-regev-20-12-2020-mail-system
-### http://www.email_system.gititregev.com/emails/tabs/inbox
+### http://www.email_system.gititregev.com/
 
 ___Demo user:___
 

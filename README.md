@@ -1,5 +1,13 @@
-# gitit-regev-20-12-2020
+# gitit-regev-20-12-2020-mail-system
+### http://www.email_system.gititregev.com/emails/tabs/inbox
 
+___Demo user:___
+
+username: dan@test.com 
+
+password: 123456
+
+#
 **This is An Email Syastem Currently Without a DB (for now based on json file).**
 
 **Written with React Hook ,Redax and NodeJS.**

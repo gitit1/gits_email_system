@@ -1,4 +1,4 @@
-# gitit-regev-20-12-2020-mail-system
+# gitit-regev-mail-system
 ### http://www.email_system.gititregev.com/
 
 ___Demo user:___

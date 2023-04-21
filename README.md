@@ -1,5 +1,5 @@
 # gitit-regev-mail-system
-### http://www.email_system.gititregev.com/
+### http://www.email_system.gititregev.info/
 
 ___Demo user:___
 

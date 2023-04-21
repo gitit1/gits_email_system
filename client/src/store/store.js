@@ -5,7 +5,6 @@ import emailsReducer from './reducers/emails';
 import usersReducer from './reducers/users';
 import screenReducer from './reducers/screen';
 
-const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
 const rootReducer = combineReducers({
     emails: emailsReducer,
@@ -13,9 +12,7 @@ const rootReducer = combineReducers({
     screen: screenReducer
 });
 
-const store = createStore(rootReducer, composeEnhancers(
-    applyMiddleware(thunk)
-));
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export default store;
 

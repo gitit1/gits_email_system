@@ -10,7 +10,7 @@ password: 123456
 #
 **This is An Email Syastem Currently Without a DB (for now based on json file).**
 
-**Written with React Hook ,Redax and NodeJS.**
+**Written with React Hooks ,Redax and NodeJS.**
 
  ### The Basic Features Are:
  - get all emails
